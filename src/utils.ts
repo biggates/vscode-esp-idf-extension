@@ -235,16 +235,33 @@ export async function setCCppPropertiesJsonCompilerPath(
     curWorkspaceFsPath.fsPath,
     modifiedEnv
   );
+  // TODO: 此处的 compilerPath 是实际存在的地址，但需要结合 ${config:idf.toolsPath} 或 ${config:idf.toolsPathWin}
+  // 将其替换为 "${config:idf.toolsPath}/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc" 的形式
   const cCppPropertiesJson = await readJSON(cCppPropertiesJsonPath);
   if (
     cCppPropertiesJson &&
     cCppPropertiesJson.configurations &&
     cCppPropertiesJson.configurations.length
   ) {
-    cCppPropertiesJson.configurations[0].compilerPath = compilerPath;
-    await writeJSON(cCppPropertiesJsonPath, cCppPropertiesJson, {
-      spaces: vscode.workspace.getConfiguration().get("editor.tabSize") || 2,
-    });
+    if (cCppPropertiesJson.configurations.length == 1) {
+      // only one config, write resolved compilerPath to it
+      cCppPropertiesJson.configurations[0].compilerPath = compilerPath;
+      await writeJSON(cCppPropertiesJsonPath, cCppPropertiesJson, {
+        spaces: vscode.workspace.getConfiguration().get("editor.tabSize") || 2,
+      });
+    } else {
+      // more than one config
+      cCppPropertiesJson.configurations.every((config) => {
+        const { compilerPath } = config;
+        // no need to if compilerPath is already set to a valid value
+        // TODO: value in compilerPath contains ${config:idf.espIdfPath}, should be replaced by vscode.workspace.getConfiguration().get()
+        if (await pathExists(compilerPath)) {
+          return false;
+        }
+
+        return true;
+      });
+    }
   }
 }
 

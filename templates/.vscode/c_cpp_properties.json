@@ -1,7 +1,7 @@
 {
   "configurations": [
     {
-      "name": "ESP-IDF",
+      "name": "ESP-IDF Windows",
       "compilerPath": "${default}",
       "cStandard": "c11",
       "cppStandard": "c++17",
@@ -10,6 +10,10 @@
         "${config:idf.espIdfPathWin}/components/**",
         "${config:idf.espAdfPath}/components/**",
         "${config:idf.espAdfPathWin}/components/**",
+        "${config:idf.espMdfPath}/components/**",
+        "${config:idf.espMdfPathWin}/components/**",
+        "${config:idf.espMatterPath}/components/**",
+        "${config:idf.espMatterPathWin}/components/**",
         "${workspaceFolder}/**"
       ],
       "browse": {
@@ -18,6 +22,33 @@
           "${config:idf.espIdfPathWin}/components",
           "${config:idf.espAdfPath}/components/**",
           "${config:idf.espAdfPathWin}/components/**",
+          "${config:idf.espMdfPath}/components/**",
+          "${config:idf.espMdfPathWin}/components/**",
+          "${config:idf.espMatterPath}/components/**",
+          "${config:idf.espMatterPathWin}/components/**",
+          "${workspaceFolder}"
+        ],
+        "limitSymbolsToIncludedHeaders": false
+      }
+    },
+    {
+      "name": "ESP-IDF Linux",
+      "compilerPath": "${default}",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "includePath": [
+        "${config:idf.espIdfPath}/components/**",
+        "${config:idf.espAdfPath}/components/**",
+        "${config:idf.espMdfPath}/components/**",
+        "${config:idf.espMatterPath}/components/**",
+        "${workspaceFolder}/**"
+      ],
+      "browse": {
+        "path": [
+          "${config:idf.espIdfPath}/components",
+          "${config:idf.espAdfPath}/components/**",
+          "${config:idf.espMdfPath}/components/**",
+          "${config:idf.espMatterPath}/components/**",
           "${workspaceFolder}"
         ],
         "limitSymbolsToIncludedHeaders": false
